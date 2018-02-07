@@ -12,10 +12,10 @@
     </div>
     <nav id="main-nav">
       <ul>
-        <li><a href="/"></a>首页</li>
-        <li><a href="/archives/"></a>归档</li>
-        <li><a href="/series/"></a>专题</li>
-        <li><a href="/search/"></a>搜索</li>
+        <li><a href="/">首页</a></li>
+        <li><a href="/archives/">归档</a></li>
+        <li><a href="/series/">专题</a></li>
+        <li><a href="/search/">搜索</a></li>
       </ul>
     </nav>
   </header>

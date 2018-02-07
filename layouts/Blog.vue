@@ -1,18 +1,16 @@
 <template>
-  <div>
+  <div id="main">
     <Header></Header>
     <div id="content-wrap">
-      <div id="content">
-
-      </div>
+      <nuxt/>
       <Footer></Footer>
     </div>
   </div>
 </template>
 
 <script>
-import Header from '../components/Header.vue'
-import Footer from '../components/Footer.vue'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 export default {
   components: {
@@ -23,8 +21,8 @@ export default {
 </script>
 
 <style>
-html, body {height: 100%;}
-#content-wrap{min-height: 100%;}
+html, body, #main, #__nuxt, #__layout {height: 100%;}
+#content-wrap {min-height: 100%;}
 * {padding: 0; margin: 0;}
 a {text-decoration: none;}
 a:hover {cursor: pointer;}

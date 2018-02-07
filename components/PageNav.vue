@@ -1,8 +1,8 @@
 <template>
-  <nav id="page-nav" v-if="pageNav && pageNavPn">
-    <a :href="pageNavPn.prev" class="prev">{{pageNav.prev}}</a>
-    <a :href="pageNavPn.next" class="prev">{{pageNav.next}}</a>
-    <div class="center">
+  <nav id="page-nav">
+    <a v-if="pageNav && pageNavPn" :href="pageNavPn.prev" class="prev">{{pageNav.prev}}</a>
+    <a v-if="pageNav && pageNavPn" :href="pageNavPn.next" class="prev">{{pageNav.next}}</a>
+    <div v-if="pageNav && pageNavPn" class="center">
       <a href="/archives/">{{pageNav.center}}</a>
     </div>
   </nav>
