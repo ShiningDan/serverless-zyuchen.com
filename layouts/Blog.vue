@@ -1,0 +1,43 @@
+<template>
+  <div>
+    <Header></Header>
+    <div id="content-wrap">
+      <div id="content">
+
+      </div>
+      <Footer></Footer>
+    </div>
+  </div>
+</template>
+
+<script>
+import Header from '../components/Header.vue'
+import Footer from '../components/Footer.vue'
+
+export default {
+  components: {
+    Header,
+    Footer
+  }
+}
+</script>
+
+<style>
+html, body {height: 100%;}
+#content-wrap{min-height: 100%;}
+* {padding: 0; margin: 0;}
+a {text-decoration: none;}
+a:hover {cursor: pointer;}
+body {font-size: 16px; font-family: -apple-system, "Helvetica Neue", "Arial", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif; font-style: normal; font-weight: 400;background: #eee;}
+pre, code{font-family : "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;}
+#content-wrap {margin-left: 270px;overflow: auto; max-width: 1300px;background: #fff;}
+#content {padding: 40px 40px 0;}
+#content a:hover {text-decoration: underline;}
+@media screen and (max-width: 1024px) {
+  #content-wrap {margin-left: 210px;}
+  #content {padding: 40px 20px 0;}
+}
+@media screen and (max-width: 640px) {
+  #content-wrap {margin-left: 0;}
+}
+</style>
