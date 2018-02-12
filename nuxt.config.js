@@ -17,6 +17,12 @@ module.exports = {
   ** Customize the progress bar color
   */
   loading: { color: '#3B8070' },
+  plugins: [
+    { src: '~plugins/element-ui', ssr: true }
+  ],
+  css: [
+    'element-ui/lib/theme-chalk/index.css'
+  ],
   /*
   ** Build configuration
   */
@@ -33,6 +39,19 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+    },
+    vendor: [
+      'element-ui'
+    ],
+    babel: {
+      "plugins": [["component", {
+          "libraryName": "element-ui",
+          "styleLibraryName": "theme-chalk"
+        },
+        'transform-async-to-generator',
+        'transform-runtime'
+      ]],
+      comments: true
     }
   }
 }

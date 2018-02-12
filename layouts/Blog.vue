@@ -22,7 +22,7 @@ export default {
 
 <style>
 html, body, #main, #__nuxt, #__layout {height: 100%;}
-#content-wrap {min-height: 100%;}
+#content-wrap {height: 100%;}
 * {padding: 0; margin: 0;}
 a {text-decoration: none;}
 a:hover {cursor: pointer;}
