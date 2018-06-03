@@ -77,56 +77,18 @@
 </template>
 
 <script>
+import {list} from '../server/controllers/list.js'
+
 export default {
   layout: 'Blog',
   data () {
     return {
       dialogTableVisible: false,
-      articles: [
-        {
-          title: 'Webpack 源码解析',
-          categories: 'Webpack',
-          createAt: '2017-10-01',
-          updateAt: '2017-10-18',
-          link: '/error'
-        },
-        {
-          title: 'Preact 源码解析之元素创建流程',
-          categories: 'Preact,JavaScript',
-          createAt: '2017-10-01',
-          updateAt: '2017-10-18',
-          link: '/error'
-        },
-        {
-          title: 'Webpack 源码解析',
-          categories: 'Webpack',
-          createAt: '2017-10-01',
-          updateAt: '2017-10-18',
-          link: '/error'
-        },
-        {
-          title: 'Webpack 源码解析',
-          categories: 'Webpack',
-          createAt: '2017-10-01',
-          updateAt: '2017-10-18',
-          link: '/error'
-        },
-        {
-          title: 'Webpack 源码解析',
-          categories: 'Webpack',
-          createAt: '2017-10-01',
-          updateAt: '2017-10-18',
-          link: '/error'
-        },
-        {
-          title: 'Webpack 源码解析',
-          categories: 'Webpack',
-          createAt: '2017-10-01',
-          updateAt: '2017-10-18',
-          link: '/error'
-        }
-      ]
+      articles: []
     }
+  },
+  created () {
+    console.log(list())
   },
   methods: {
     handleEdit (index, data) {

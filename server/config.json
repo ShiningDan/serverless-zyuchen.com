@@ -1,0 +1,5 @@
+{
+  "mongoLink": "ds251548.mlab.com:51548/zyuchen",
+  "mongoUser": "zyuchen",
+  "mongoPassword": "zyuchen-mongo"
+}

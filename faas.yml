@@ -1,0 +1,16 @@
+accountid: 1068604667353463
+accessKeyId: 'LTAIdApuSsOhki1l'
+AccessKeySecret: 'x0mXVrZ6hNZzTOkMSGvqaxiSgjGsT5'
+function-compute:
+  region: 'cn-shanghai'
+  services:
+    - name: 'zyuchen'
+      description: 'zyuchen 博客后台处理'
+      functions:
+        - name: 'helloworld'
+          description: 'hello!'
+          # entry point
+          handler: hello.index
+          # which files should be ziped
+          codes:
+            - 'hello.js'
