@@ -7,11 +7,13 @@
       <div class="dialog-head">是否确认删掉文章</div>
       <div class="dialog-body">
         <el-button type="success">确认</el-button>
-        <el-button type="danger">取消</el-button>        
+        <el-button type="danger">取消</el-button>
       </div>
     </el-dialog>
     <div class="header">
-      <el-button type="primary">创建新文章</el-button>
+      <el-button type="primary">
+        <nuxt-link to='/admin/upload' style="color: inherit">创建新文章</nuxt-link>
+      </el-button>
     </div>
     <div class="body">
       <el-table
@@ -29,24 +31,26 @@
         <el-table-column
           label="文章标签"
           prop="categories"
+          :formatter="categoriesFormatter"
         >
         </el-table-column>
         <el-table-column
           label="创建时间"
           prop="createAt"
+          :formatter="timeFormatter"
         >
         </el-table-column>
         <el-table-column
           label="修改时间"
           prop="updateAt"
+          :formatter="timeFormatter"
         >
         </el-table-column>
         <el-table-column
           label="查看"
-          prop="link"
         >
           <template slot-scope="scope">
-            <a :href="scope.link" target="_blank">查看</a>
+            <a :href="scope.row.link" target="_blank" style="color: inherit">查看</a>
           </template>
         </el-table-column>
         <el-table-column
@@ -58,9 +62,12 @@
             <el-button
               size="mini"
               type="primary"
-              @click="handleEdit(scope.$index, scope.row)"
             >
-              编辑
+              <a :href="'/admin/upload/' + scope.row._id"
+                style="color: inherit"
+              >
+                编辑
+              </a>
             </el-button>
             <el-button
               size="mini"
@@ -77,7 +84,8 @@
 </template>
 
 <script>
-import {list} from '../server/controllers/list.js'
+import axios from '~plugins/axios'
+import moment from 'moment'
 
 export default {
   layout: 'Blog',
@@ -87,15 +95,24 @@ export default {
       articles: []
     }
   },
-  created () {
-    console.log(list())
+  async created () {
+    this.articles = await axios.get('/admin/list')
   },
   methods: {
-    handleEdit (index, data) {
-      console.log('handle arti edit', index, data)
-    },
     handleDelete (index, data) {
-      console.log('handle arti delete', index, data)    
+      console.log('handle arti delete', index, data)
+    },
+    categoriesFormatter (row, column, cellValue, index) {
+      if (cellValue) {
+        return cellValue.join(', ')
+      }
+      return ''
+    },
+    timeFormatter (row, column, cellValue, index) {
+      if (cellValue) {
+        return moment(cellValue).locale('zh-cn').format('LL')
+      }
+      return ''
     }
   }
 }

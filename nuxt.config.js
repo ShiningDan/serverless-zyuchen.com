@@ -1,4 +1,10 @@
+const path  = require('path')
+
 module.exports = {
+
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:7001',
+  },
   /*
   ** Headers of the page
   */
@@ -39,6 +45,8 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+      config.resolve.alias['~'] = __dirname
+      config.resolve.alias['~plugins'] = path.join(__dirname, 'plugins')
     },
     vendor: [
       'element-ui'

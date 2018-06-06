@@ -7,7 +7,7 @@
       <el-input v-model="form.link"></el-input>
     </el-form-item>
     <el-form-item label="文章标签：">
-      <el-select 
+      <el-select
         v-model="form.categories"
         multiple
         filterable
@@ -23,7 +23,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="文章专题（可选）：">
-      <el-select 
+      <el-select
         v-model="form.series"
         multiple
         filterable
@@ -68,6 +68,8 @@
 </template>
 
 <script>
+import axios from '~plugins/axios'
+
 export default {
   layout: 'Blog',
   data () {
@@ -75,7 +77,7 @@ export default {
       form: {
         title: '',
         link: '',
-        content: '',
+        md: '',
         categories: [],
         series: [],
         createAt: '',
@@ -121,13 +123,20 @@ export default {
       }
     }
   },
+  async created () {
+    const id = this.$route.params.id
+    if (id) {
+      const article = await axios.get(`/admin/upload/${id}`)
+      this.form = article
+    }
+  },
   mounted () {
     const head = document.getElementsByTagName('head')[0]
     if (head) {
       const script = document.createElement('script')
       script.onload = function () {
         if (SimpleMDE) {
-          var simplemde = new SimpleMDE({ 
+          var simplemde = new SimpleMDE({
             element: document.getElementById("mde")
           });
         } else {
