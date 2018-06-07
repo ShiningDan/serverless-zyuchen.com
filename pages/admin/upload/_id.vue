@@ -74,6 +74,7 @@ export default {
   layout: 'Blog',
   data () {
     return {
+      simplemde: undefined,
       form: {
         title: '',
         link: '',
@@ -125,19 +126,47 @@ export default {
   },
   async created () {
     const id = this.$route.params.id
+    let categories, series, article
     if (id) {
-      const article = await axios.get(`/admin/upload/${id}`)
+      [categories, series, article] = await Promise.all([
+        axios.get('/admin/categories'),
+        axios.get('/admin/series'),
+        axios.get(`/admin/upload/${id}`)
+      ])
       this.form = article
+      if (this.simplemde) {
+        this.simplemde.value(this.form.md)
+      }
+    } else {
+      [categories, series] = await Promise.all([
+        axios.get('/admin/categories'),
+        axios.get('/admin/series')
+      ])
     }
+    this.series = series.map(s => ({
+      value: s.name,
+      label: s.name
+    }))
+    this.categories = categories.map(category => ({
+      value: category.name,
+      label: category.name
+    }))
   },
   mounted () {
     const head = document.getElementsByTagName('head')[0]
     if (head) {
       const script = document.createElement('script')
+      const _this = this
       script.onload = function () {
         if (SimpleMDE) {
-          var simplemde = new SimpleMDE({
+          _this.simplemde = new SimpleMDE({
             element: document.getElementById("mde")
+          });
+          if (_this.form.md) {
+            _this.simplemde.value(this.form.md)
+          }
+          _this.simplemde.codemirror.on("change", function(){
+            _this.form.md = _this.simplemde.value()
           });
         } else {
           console.log('SimpleMDE not fount, script Error')
