@@ -85,32 +85,8 @@ export default {
         updateAt: '',
         abstract: ''
       },
-      categories: [{
-          value: 'HTML',
-          label: 'HTML'
-        }, {
-          value: 'CSS',
-          label: 'CSS'
-        }, {
-          value: 'JavaScript',
-          label: 'JavaScript'
-      }],
-      series: [{
-          value: '前端相关专题',
-          label: '前端相关专题'
-        }, {
-          value: '网络相关专题',
-          label: '网络相关专题'
-        }, {
-          value: '数据库相关专题',
-          label: '数据库相关专题'
-        }, {
-          value: '后台相关专题',
-          label: '后台相关专题'
-        }, {
-          value: 'JavaScript专题',
-          label: 'JavaScript专题'
-      }],
+      categories: [],
+      series: [],
       pickerOption: {
         disabledDate(time) {
           return time.getTime() > Date.now();
