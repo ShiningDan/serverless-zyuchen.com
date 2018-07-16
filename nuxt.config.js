@@ -47,6 +47,7 @@ module.exports = {
       }
       config.resolve.alias['~'] = __dirname
       config.resolve.alias['~plugins'] = path.join(__dirname, 'plugins')
+      config.resolve.alias['~components'] = path.join(__dirname, 'components')
     },
     vendor: [
       'element-ui'
