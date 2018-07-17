@@ -35,6 +35,7 @@
 import axios from '~plugins/axios'
 import moment from 'moment'
 import pageNav from '~components/PageNav.vue'
+import qs from 'querystring'
 const PAGE_COUNT = 5
 
 export default {
@@ -68,13 +69,75 @@ export default {
     }
     const {lt, gt} = this.$route.query
     const length = originAbs.length
+    console.log(this.$route.query)
     console.log(originAbs)
     // id 越大，代表文章越新
     if (gt) {
-      this.abstracts = originAbs.slice(1)
-      // add pagenav
+      // 如果文章数量小于或等于一页文章的数量，则不显示上一页，只显示下一页
+      if (originAbs.length <= PAGE_COUNT) {
+        this.abstracts = originAbs
+        this.pagenav.pageNav = {
+          prev: '',
+          center: '归档',
+          next: '下一页'
+        }
+        this.pagenav.pageNavPn = {
+          prev: '',
+          next: '?' + qs.stringify({
+            lt: originAbs[length - 1]._id
+          })
+        }
+      } else {
+        // 说明总体文章数量大于首页一页文章的数量，需要显示下一页
+        this.abstracts = originAbs.slice(0, length - 1)
+        const nextPn = originAbs[length - 1]
+        this.pagenav.pageNav = {
+          prev: '上一页',
+          center: '归档',
+          next: '下一页'
+        }
+        this.pagenav.pageNavPn = {
+          prev: '?' + qs.stringify({
+            gt: originAbs[0]._id
+          }),
+          next: '?' + qs.stringify({
+            lt: originAbs[PAGE_COUNT - 1]._id
+          })
+        }
+      }
     } else if (lt) {
-      this.abstracts = originAbs.slice(0, length - 1)
+      // 如果文章数量小于或等于一页文章的数量，则不显示下一页，只显示上一页
+      if (originAbs.length <= PAGE_COUNT) {
+        this.abstracts = originAbs
+        this.pagenav.pageNav = {
+          prev: '上一页',
+          center: '归档',
+          next: ''
+        }
+        this.pagenav.pageNavPn = {
+          prev: '?' + qs.stringify({
+            gt: originAbs[0]._id
+          }),
+          next: ''
+        }
+      } else {
+        // 说明总体文章数量大于首页一页文章的数量，需要显示下一页
+        this.abstracts = originAbs.slice(0, length - 1)
+        const nextPn = originAbs[length - 1]
+        this.pagenav.pageNav = {
+          prev: '上一页',
+          center: '归档',
+          next: '下一页'
+        }
+        this.pagenav.pageNavPn = {
+          prev: '?' + qs.stringify({
+            gt: originAbs[0]._id
+          }),
+          next: '?' + qs.stringify({
+            lt: originAbs[PAGE_COUNT - 1]._id
+          })
+        }
+      }
     } else {
       if (originAbs.length <= PAGE_COUNT) {
         // 说明总体文章的数量小于或等于首页一页文章的数量，则不需要显示上一页和下一页
@@ -90,7 +153,9 @@ export default {
         }
         this.pagenav.pageNavPn = {
           prev: '',
-          next: `lt=${nextPn._id}`
+          next: '?' + qs.stringify({
+            lt: originAbs[PAGE_COUNT - 1]._id
+          })
         }
       }
     }
