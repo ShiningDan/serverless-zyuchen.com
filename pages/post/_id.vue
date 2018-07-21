@@ -27,25 +27,82 @@
         <a href="/series/">»</a>
       </h3>
       <ul class="series-ul"
-        v-if="article.series && article.series.length > 0">
+        v-if="series && series.length > 0">
+        <li
+          v-for="s in series"
+          :key="s._id">
+          <a :href="s.link">
+            {{s.title}}
+          </a>
+          <span class="time">
+            {{moment(s.meta.createAt).format('YYYY-MM-DD')}}
+          </span>
+        </li>
       </ul>
     </div>
+    <pageNav
+      :pageNav="pagenav.pageNav"
+      :pageNavPn="pagenav.pageNavPn">
+    </pageNav>
   </div>
 </template>
 
 <script>
 import axios from '~plugins/axios'
 import moment from 'moment'
+import pageNav from '~components/PageNav.vue'
 
 export default {
   layout: 'Blog',
+  components: {
+    pageNav
+  },
   data () {
     return {
-      article: {}
+      article: {},
+      series: [],
+      pagenav: {
+        // 这里的参数为链接内显示的文字内容
+        pageNav: {
+          prev: '',
+          center: '',
+          next: ''
+        },
+        // 这里的参数为补充 href 的链接
+        pageNavPn: {
+          prev: '',
+          next: ''
+        }
+      }
     }
   },
-  async mounted () {
-    this.article = await axios.get(location.pathname)
+  async created () {
+    this.article = await axios.get(this.$route.fullPath)
+  },
+  watch: {
+    article: async function(article, old) {
+      const articleNav = await axios.get('/articleNav', {
+        params: {
+          id: this.article._id,
+        }
+      })
+      if (articleNav.articleNew) {
+        this.pagenav.pageNav.next = articleNav.articleNew.title
+        this.pagenav.pageNavPn.next = articleNav.articleNew.link
+      }
+      if (articleNav.articleOld) {
+        this.pagenav.pageNav.prev = articleNav.articleOld.title
+        this.pagenav.pageNavPn.prev = articleNav.articleOld.link
+      }
+      if (article.series && article.series.length > 0) {
+        const series = await axios.get('/articleSeries', {
+          params: {
+            series: article.series[0]
+          }
+        })
+        this.series = series;
+      }
+    }
   },
   updated () {
     this.lazyload()
@@ -120,6 +177,7 @@ export default {
 #content .tag:after {content: '、';}
 #content .tag:last-child:after {content: '';}
 #content .series-info a {text-decoration: none;font-size: 14px;margin-left: 4px;}
+#content .series-ul a {font-size: 16px;}
 #content .series-ul .time {font-size: 14px;margin-left: 10px;}
 #content #comments {margin-top: 20px; padding-top: 20px; border-top: 1px solid #ccc;}
 #toc {float: right; border: 1px solid #ccc; padding: 10px; max-width: 260px; min-width: 120px; margin: 0 0 15px 20px;}

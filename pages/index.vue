@@ -1,33 +1,31 @@
 <template>
-  <div>
-    <div id="content">
-      <article v-for="(abstract, index) in abstracts"
-        :key="index"
-      >
-        <div class="meta">
-          <div class="date">
-            {{moment(abstract.createAt).format('YYYY-MM-DD')}}
-          </div>
+  <div id="content">
+    <article v-for="(abstract, index) in abstracts"
+      :key="index"
+    >
+      <div class="meta">
+        <div class="date">
+          {{moment(abstract.createAt).format('YYYY-MM-DD')}}
         </div>
-        <h1 class="title">
-          <a :href="abstract.link">
-            {{abstract.title}}
-          </a>
-        </h1>
-        <div class="post-content">
-          <p class="abstract">
-            {{abstract.abstract}}
-          </p>
-          <p>
-            <a :href="abstract.link">继续阅读...</a>
-          </p>
-        </div>
-      </article>
-      <pageNav
-        :pageNav="pagenav.pageNav"
-        :pageNavPn="pagenav.pageNavPn">
-      </pageNav>
-    </div>
+      </div>
+      <h1 class="title">
+        <a :href="abstract.link">
+          {{abstract.title}}
+        </a>
+      </h1>
+      <div class="post-content">
+        <p class="abstract">
+          {{abstract.abstract}}
+        </p>
+        <p>
+          <a :href="abstract.link">继续阅读...</a>
+        </p>
+      </div>
+    </article>
+    <pageNav
+      :pageNav="pagenav.pageNav"
+      :pageNavPn="pagenav.pageNavPn">
+    </pageNav>
   </div>
 </template>
 
@@ -69,8 +67,6 @@ export default {
     }
     const {lt, gt} = this.$route.query
     const length = originAbs.length
-    console.log(this.$route.query)
-    console.log(originAbs)
     // id 越大，代表文章越新
     if (gt) {
       // 如果文章数量小于或等于一页文章的数量，则不显示上一页，只显示下一页
