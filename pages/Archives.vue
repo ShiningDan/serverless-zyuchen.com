@@ -1,5 +1,6 @@
 <template>
-  <div id="content">
+  <div id="content"
+    v-if="articles.length > 0">
     <div id="toc">
       <header>年份列表</header>
       <ul>
@@ -81,7 +82,7 @@ export default {
       return links
     }
   },
-  async mounted () {
+  async created () {
     this.articles = await axios.get('/archives')
   },
   methods: {

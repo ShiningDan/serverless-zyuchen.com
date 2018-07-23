@@ -1,11 +1,12 @@
 <template>
-  <div id="content">
+  <div id="content"
+    v-if="series.length > 0">
     <div id="toc">
       <header>年份列表</header>
       <ul>
         <li v-for="(s, index) in series"
           :key="s.name">
-          <a :href="'toc-' + index">{{s.name}}</a>
+          <a :href="'#toc-' + index">{{s.name}}</a>
         </li>
       </ul>
     </div>
@@ -17,7 +18,7 @@
     </p>
     <div v-for="(s, index) in series"
       :key="s.name">
-      <h2 :name="'toc-' + index">{{s.name}}</h2>
+      <h2 :id="'toc-' + index">{{s.name}}</h2>
       <ul>
         <li v-for="article in s.articles"
           :key="article.title">
@@ -42,7 +43,7 @@ export default {
       series: []
     }
   },
-  async mounted () {
+  async created () {
     this.series = await axios.get('/series')
   },
   methods: {

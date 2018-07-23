@@ -59,6 +59,7 @@ export default {
   },
   data () {
     return {
+      loading: undefined,
       article: {},
       series: [],
       pagenav: {
@@ -77,7 +78,15 @@ export default {
     }
   },
   async created () {
+    this.loading = this.$loading({
+      lock: true,
+      text: '加载中',
+      background: 'rgba(0, 0, 0, 0.8)'
+    })
     this.article = await axios.get(this.$route.fullPath)
+    if (this.loading) {
+      this.loading.close()
+    }
   },
   watch: {
     article: async function(article, old) {
@@ -154,7 +163,7 @@ export default {
 </script>
 
 <style>
-#content {color: #444; line-height: 1.6; word-wrap: break-word;}
+#content {color: #444; line-height: 1.6; word-wrap: break-word; height: 100%;}
 #content .load{height: auto!important;}
 #content h1 {color: #333; font-size: 2rem; font-weight: 400; line-height: 35px;}
 #content h2 {font-size: 1.6rem;}

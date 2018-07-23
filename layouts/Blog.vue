@@ -16,6 +16,19 @@ export default {
   components: {
     Header,
     Footer
+  },
+  data () {
+    return {
+      loading: undefined
+    }
+  },
+  methods: {
+    closeLoading() {
+      console.log('1111111')
+      if (this.loading) {
+        this.loading.close()
+      }
+    }
   }
 }
 </script>
