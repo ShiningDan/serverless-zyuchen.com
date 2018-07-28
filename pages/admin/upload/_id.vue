@@ -113,6 +113,11 @@ export default {
     }
   },
   async created () {
+    const response = await axios.get('/admin/alive')
+    if (response.status === 401) {
+      this.$router.push('/admin/login')
+      return
+    }
     const id = this.$route.params.id
     let categories, series, article
     if (id) {
