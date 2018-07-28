@@ -1,7 +1,9 @@
 import axios from 'axios'
 
+axios.defaults.withCredentials=true;
 const instance = axios.create({
-  baseURL: process.env.baseUrl
+  baseURL: process.env.baseUrl,
+  headers: {'X-Requested-With': 'XMLHttpRequest'},
 })
 
 instance.interceptors.response.use((response) => {

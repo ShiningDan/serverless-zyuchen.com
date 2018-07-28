@@ -1,5 +1,6 @@
 <template>
-  <div id="content">
+  <div id="content"
+    v-if="article !== undefined">
     <div v-html="article.content"></div>
     <div class="eof">--EOF--</div>
     <div class="post-info">
@@ -60,7 +61,7 @@ export default {
   data () {
     return {
       loading: undefined,
-      article: {},
+      article: undefined,
       series: [],
       pagenav: {
         // 这里的参数为链接内显示的文字内容

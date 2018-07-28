@@ -1,38 +1,54 @@
 <template>
   <div class="x-login-wrap" >
-    <el-form class="login" ref="form" :model="form" label-width="80px">
+    <el-form
+      class="login"
+      ref="form"
+      :model="form"
+      label-width="80px"
+      @submit.native.prevent>
       <el-form-item label="用户名称">
-        <el-input v-model="form.username"></el-input>
+        <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="密码">
         <el-input v-model="form.password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="login">登录</el-button>
+        <el-button
+          native-type="submit"
+          type="primary"
+          @click="login(form)">登录</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import axios from '~plugins/axios'
+
 export default {
-  layout: 'Blog',
+  layout: 'Admin',
   data() {
     return {
       form: {
-        username: '',
+        name: '',
         password: ''
       }
     }
   },
   methods: {
-    login() {
-      const h = this.$createElement;
-      this.$notify({
-        title: '警告',
-        message: h('i', { style: 'color: teal'}, '测试消息'),
-        type: 'warning'
-      });
+    async login(form) {
+      const auth = await axios.post(this.$route.fullPath, form)
+      const { status, message } = auth
+      if (status === 401) {
+        const h = this.$createElement;
+        this.$notify({
+          title: '错误',
+          message: h('i', { style: 'color: teal'}, message),
+          type: 'error'
+        });
+      } else {
+        this.$router.push('/admin/list')
+      }
     }
   }
 }
@@ -40,8 +56,7 @@ export default {
 
 <style>
 .x-login-wrap {
-  height: 100%;
-  margin-bottom: -80px;
+  height: 726px;
   box-sizing: border-box;
   position: relative;
 }

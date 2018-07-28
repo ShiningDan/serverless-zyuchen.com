@@ -88,7 +88,7 @@ import axios from '~plugins/axios'
 import moment from 'moment'
 
 export default {
-  layout: 'Blog',
+  layout: 'Admin',
   data () {
     return {
       dialogTableVisible: false,

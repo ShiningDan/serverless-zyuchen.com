@@ -1,5 +1,10 @@
 <template>
-  <el-form ref="form" :model="form" label-width="140px" class="x-upload">
+  <el-form
+    ref="form"
+    :model="form"
+    label-width="140px"
+    class="x-upload"
+    @submit.native.prevent>
     <el-form-item label="文章标题：">
       <el-input v-model="form.title"></el-input>
     </el-form-item>
@@ -58,11 +63,18 @@
       >
       </el-date-picker>
     </el-form-item>
-    <el-form-item label="文章摘要">
+    <el-form-item label="文章摘要：">
       <el-input autosize type="textarea" v-model="form.abstract"></el-input>
     </el-form-item>
-    <el-form-item label="文章正文">
-       <textarea id="mde"></textarea>
+    <el-form-item label="文章正文：">
+      <textarea id="mde"></textarea>
+    </el-form-item>
+    <el-form-item>
+      <el-button
+        type="primary"
+        @click="submit(form)">
+        保存并提交
+      </el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -71,7 +83,7 @@
 import axios from '~plugins/axios'
 
 export default {
-  layout: 'Blog',
+  layout: 'Admin',
   data () {
     return {
       simplemde: undefined,
@@ -156,6 +168,14 @@ export default {
       style.href = '/css/simplemde.min.css'
     } else {
       console.log('head is not found')
+    }
+  },
+  methods: {
+    async submit(form) {
+      console.log(form, '-------')
+
+      const result = await axios.post('/admin/create', form)
+      console.log(result)
     }
   }
 }
